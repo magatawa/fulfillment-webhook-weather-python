@@ -36,13 +36,14 @@ def webhook():
     # # 共有設定したスプレッドシートの名前を指定する
     worksheet = gc.open("Google Assistant Commands").get_worksheet(1)
 #以下、動作テスト
-# A1セルの値を取得
-print worksheet.cell(1,1)
-# A1セルを更新
-worksheet.update_cell(1,1, u'Hello, gspread.')
+  cell = worksheet.find(weapon_name)
+
+    text = str(cell.value) + str(worksheet.cell(cell.row,cell.col+1).value) + "パーセント"
+    r = make_response(jsonify({'speech':text,'displayText':text}))
+    r.headers['Content-Type'] = 'application/json'
+    return r
+
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
 
     print("Starting app on port %d" % port)
-
-    app.run(debug=False, port=port, host='0.0.0.0')
