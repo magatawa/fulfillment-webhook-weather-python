@@ -28,8 +28,14 @@ def webhook():
     parameters = result.get("parameters")
     weapon_name = parameters.get("weapon_name")
 
-    scope = ['https://spreadsheets.google.com/feeds']
+    # 認証に必要な情報
+client_email = "test-f6d93@appspot.gserviceaccount.com" # 手順2で発行されたメールアドレス
+with open("TEST-38f2618bf97e.p1") as f: notasecret = f.read() # 手順2で発行された秘密鍵
 
+    scope = ['https://spreadsheets.google.com/feeds']
+    
+auth_token = gdata.gauth.OAuth2TokenFromCredentials(credentials)
+auth_token.authorize(client)
     #ダウンロードしたjsonファイルを同じフォルダに格納して指定する
     credentials = ServiceAccountCredentials.from_json_keyfile_name('TEST-38f2618bf97e.p12', scope)
     gc = gspread.authorize(credentials)
