@@ -14,7 +14,6 @@ from flask import request
 from flask import make_response, jsonify
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-import gdata.spreadsheets.client
 
 
 # Flask app should start in global layout
@@ -28,22 +27,16 @@ def webhook():
     parameters = result.get("parameters")
     weapon_name = parameters.get("weapon_name")
 
-    # 認証に必要な情報
-client_email = "test-f6d93@appspot.gserviceaccount.com" # 手順2で発行されたメールアドレス
-with open("TEST-38f2618bf97e.p1") as f: notasecret = f.read() # 手順2で発行された秘密鍵
-
     scope = ['https://spreadsheets.google.com/feeds']
-    
-auth_token = gdata.gauth.OAuth2TokenFromCredentials(credentials)
-auth_token.authorize(client)
+
     #ダウンロードしたjsonファイルを同じフォルダに格納して指定する
-    credentials = ServiceAccountCredentials.from_json_keyfile_name('TEST-38f2618bf97e.p12', scope)
+    credentials = ServiceAccountCredentials.from_json_keyfile_name('xxxxxxxxxx.json', scope)
     gc = gspread.authorize(credentials)
 
     # # 共有設定したスプレッドシートの名前を指定する
     worksheet = gc.open("Google Assistant Commands").get_worksheet(1)
-#以下、動作テスト
-  cell = worksheet.find(weapon_name)
+
+    cell = worksheet.find(weapon_name)
 
     text = str(cell.value) + str(worksheet.cell(cell.row,cell.col+1).value) + "パーセント"
     r = make_response(jsonify({'speech':text,'displayText':text}))
@@ -54,3 +47,5 @@ if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
 
     print("Starting app on port %d" % port)
+
+    app.run(debug=False, port=port, host='0.0.0.0')
