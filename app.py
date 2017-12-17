@@ -34,7 +34,7 @@ def webhook():
     gc = gspread.authorize(credentials)
 
     # # 共有設定したスプレッドシートの名前を指定する
-    worksheet = gc.open("Google Assistant Commands").get_worksheet(1)
+    worksheet = gc.open("1RUGJgAD9pl67-WPeRBOdXUj7exJgHaJ2tMKjbWUfyqQ").get_worksheet(1)
 #以下、動作テスト
   cell = worksheet.find(weapon_name)
 
