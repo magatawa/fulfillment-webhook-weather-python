@@ -31,7 +31,7 @@ def webhook():
     scope = ['https://spreadsheets.google.com/feeds']
 
     #ダウンロードしたjsonファイルを同じフォルダに格納して指定する
-    credentials = ServiceAccountCredentials.from_json_keyfile_name('fulfillment-webhook-weather-python/TEST-1db5de85b421.json', scope)
+    credentials = ServiceAccountCredentials.from_json_keyfile_name('TEST-38f2618bf97e.p12', scope)
     gc = gspread.authorize(credentials)
 
     # # 共有設定したスプレッドシートの名前を指定する
