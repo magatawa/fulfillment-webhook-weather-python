@@ -14,6 +14,7 @@ from flask import request
 from flask import make_response, jsonify
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+import gdata.spreadsheets.client
 
 
 # Flask app should start in global layout
